@@ -27,7 +27,9 @@ class MovieListViewModel(
             try {
                 val response = movieAPI.getMovie()
                 if (response.isSuccessful) {
-                    _movies.value = response.body()?.docs
+                    val movieResponseData = response.body()
+                    _movies.value = movieResponseData?.docs
+                    val liveData: LiveData<List<Doc>> = MutableLiveData(movieResponseData?.docs)
                 }
             } catch (e: Exception) {
                     //TODO
