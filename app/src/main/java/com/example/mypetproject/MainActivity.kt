@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity(), Navigator {
             .beginTransaction()
             .setCustomAnimations(androidx.appcompat.R.anim.abc_popup_enter, androidx.appcompat.R.anim.abc_popup_exit)
             .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
             .commit()
     }
 
@@ -60,7 +61,7 @@ class MainActivity : AppCompatActivity(), Navigator {
         supportFragmentManager
             .beginTransaction()
             .setCustomAnimations(androidx.appcompat.R.anim.abc_popup_enter, androidx.appcompat.R.anim.abc_popup_exit)
-            .replace(R.id.fragment_container, MovieDetailsFragment.newInstance(movie.id))
+            .replace(R.id.fragment_container, MovieDetailsFragment.newInstance(movie))
             .addToBackStack(null)
             .commit()
     }

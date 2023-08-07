@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/movie_button"
+        android:id="@+id/movie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Movie" />
@@ -19,10 +19,23 @@
         android:text="Serials" />
 
     <Button
-        android:id="@+id/top100"
+        android:id="@+id/cartoon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Top 100" />
+        android:text="Cartoon" />
 
+
+    <Button
+        android:id="@+id/anime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Anime" />
+
+
+    <Button
+        android:id="@+id/anime_series"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Animated series" />
 
 </LinearLayout>

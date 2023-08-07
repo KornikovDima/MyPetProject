@@ -19,8 +19,8 @@ interface MovieAPI {
         @Query("selectFields") ratingImdb: String = "rating.imdb",
         @Query("selectFields") posterUrl: String = "poster.url",
         @Query("selectFields") videosTrailersUrl: String = "videos.trailers.url",
-        @Query("limit") limit: Int = 20,
-        @Query("type") movie: String = "movie",
+        @Query("limit") limit: Int = 99,
+        @Query("type") type: String,
 
     ): Response<MovieResponseData>
 }

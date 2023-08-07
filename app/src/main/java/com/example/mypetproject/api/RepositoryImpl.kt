@@ -1,5 +1,7 @@
 package com.example.mypetproject.api
 
+import com.example.mypetproject.MovieNotFoundExceptions
+import com.example.mypetproject.Service.Const
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,16 +13,13 @@ class RepositoryImpl {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
-
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(interceptor)
         .build()
 
-    private val baseUrl = "https://api.kinopoisk.dev/"
-
     private val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl(Const.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

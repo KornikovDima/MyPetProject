@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mypetproject.api.Doc
 import com.example.mypetproject.databinding.FragmentMovieListBinding
 import com.example.mypetproject.screens.factory
 import com.example.mypetproject.screens.navigator
 
-class MovieListFragment : Fragment() {
+class MovieListFragment : Fragment(), MovieClickListener {
 
     private var _binding: FragmentMovieListBinding? = null
     private val binding: FragmentMovieListBinding get() = _binding!!
@@ -27,14 +26,17 @@ class MovieListFragment : Fragment() {
     ): View {
         _binding = FragmentMovieListBinding.inflate(inflater, container, false)
 
-        adapter = MovieAdapter(object : MovieActionListener {
-            override fun onMovieDetails(movie: Doc) { navigator().showDetails(movie) }})
+        val type = arguments?.getString("param")
+        if (type != null) {
+            viewModel.loadMovieNetwork(param = type)
+        }
 
-        viewModel.movies.observe(viewLifecycleOwner, Observer { adapter.movies = it })
+        adapter = MovieAdapter(this)
 
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.recyclerView.adapter = adapter
 
+        viewModel.movies.observe(viewLifecycleOwner) { adapter.movies = it }
 
         return binding.root
     }
@@ -43,4 +45,11 @@ class MovieListFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
+    override fun onMovieClick(movie: Doc) {
+        navigator().showDetails(movie)
+    }
 }
+
+
+
