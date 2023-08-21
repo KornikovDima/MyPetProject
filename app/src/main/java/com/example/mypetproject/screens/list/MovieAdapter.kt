@@ -10,8 +10,6 @@ import com.example.mypetproject.R
 import com.example.mypetproject.api.Doc
 import com.example.mypetproject.databinding.ItemMovieBinding
 
-
-
 class MovieAdapter(
     private val movieClickListener: MovieClickListener
 ): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {

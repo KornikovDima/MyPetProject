@@ -4,21 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.mypetproject.R
 import com.example.mypetproject.api.Doc
 import com.example.mypetproject.databinding.FragmentMovieDetailsBinding
-import com.example.mypetproject.screens.factory
+import com.example.mypetproject.screens.navigator
 
 
 class MovieDetailsFragment : Fragment() {
 
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding: FragmentMovieDetailsBinding get() = _binding!!
+    private lateinit var adapter: PersonsAdapter
 
 //    private val viewModel: MovieDetailsViewModel by viewModels { factory() }
 
@@ -34,17 +33,32 @@ class MovieDetailsFragment : Fragment() {
     ): View {
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
 
-        val poster = arguments?.getString("poster")
+        adapter = PersonsAdapter()
+
+        val movie = requireArguments().getParcelable<Doc>("movie")
 
         with(binding) {
-            titleMovieTV.text = arguments?.getString("title")
-            descriptionMovieTV.text = arguments?.getString("description")
-            Glide.with(posterIVDetails.context)
-                .load(poster)
+            titleMovieTV.text = movie?.name
+            descriptionMovieTV.text = movie?.description
+            genresValueTV.text = movie?.genres?.joinToString(", ") { genre -> genre.name }
+            countriesValueTV.text = movie?.countries?.joinToString(", ") { country -> country.name }
+            ratingKpValueTV.text = movie?.rating?.kp.toString()
+            ratingImdbValueTV.text = movie?.rating?.imdb.toString()
+            yearValueTV.text = movie?.year.toString()
+            movieLeghthValueTV.text = movie?.movieLength.toString()
+            Glide.with(posterIVDetails)
+                .load(movie?.poster?.url)
                 .placeholder(R.drawable.image_search)
                 .error(R.drawable.image_search)
                 .into(posterIVDetails)
+            personsRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            personsRV.adapter = adapter
+
+            adapter.persons = movie!!.persons
         }
+        binding.pressToBackButton.setOnClickListener { navigator().goBack() }
+
+
         return binding.root
     }
 
@@ -55,15 +69,10 @@ class MovieDetailsFragment : Fragment() {
 
     companion object{
 
-        fun newInstance(movie: Doc): MovieDetailsFragment {
-
-            val args = Bundle()
-            args.putString("title", movie.name)
-            args.putString("poster", movie.poster.url)
-            args.putString("description", movie.description)
-            val fragment = MovieDetailsFragment()
-            fragment.arguments = args
-            return fragment
+        fun newInstance(movie: Doc) = MovieDetailsFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable("movie", movie)
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.example.mypetproject.api
 
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -19,6 +18,12 @@ interface MovieAPI {
         @Query("selectFields") ratingImdb: String = "rating.imdb",
         @Query("selectFields") posterUrl: String = "poster.url",
         @Query("selectFields") videosTrailersUrl: String = "videos.trailers.url",
+        @Query("selectFields") movieLength: String = "movieLength",
+        @Query("selectFields") ageRating: String = "ageRating",
+        @Query("selectFields") genresName: String = "genres.name",
+        @Query("selectFields") countriesName: String = "countries.name",
+        @Query("selectFields") personsName: String = "persons.name",
+        @Query("selectFields") personsPhoto: String = "persons.photo",
         @Query("limit") limit: Int = 99,
         @Query("type") type: String,
 
